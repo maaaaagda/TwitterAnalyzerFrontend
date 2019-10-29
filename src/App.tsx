@@ -22,7 +22,7 @@ class App extends React.Component<{}> {
   render() {
     return (
       <div className="app-container">
-          <div className='row'>
+          <div className='row height-100'>
             <div className='app-description'>
               <div className="app-header">
                 Twitter #Hashtag Analyzer
