@@ -1,6 +1,10 @@
 import React from "react";
 
-const HashtagInput: React.FC<{onChange: () => void}> = ({onChange}) => {
+interface IProps {
+    onChange: any
+}
+
+const HashtagInput: React.FC<IProps> = ({onChange}) => {
     return (
         <div className="row">
             <div className="hashtag-input-container">

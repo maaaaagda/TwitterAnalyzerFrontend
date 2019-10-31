@@ -1,22 +1,35 @@
 import React from 'react';
 import './styles/App.scss';
-import ReportCategory from "./RaportCategory";
+import ReportCategory from "./ReportCategory";
 import HashtagInput from "./HashtagInput"
+import { IReportCategory } from './IReportCategory';
 
-class App extends React.Component<{}> {
+interface IState {
+  selectedId: number,
+  hashtag: string
+}
+
+const categories: IReportCategory[] =  [
+    {id: 1, title: "Get general #hashtag statistics"},
+    {id: 2, title: "Get most popular posts for given #hashtag"},
+    {id: 3, title: "Get #hashtag popularity prediction"}
+  ]
+
+class App extends React.Component<{}, IState> {
   constructor(props: any){
     super(props);
     this.state = {
-      selectedOption: 1
+      selectedId: categories[0].id,
+      hashtag: ""
     }
   }
 
-  changeRaportCategory() {
-
+  changeReportCategory(id: number) {
+    this.setState({selectedId: id})
   }
 
-  onHashtagChange(){
-
+  onHashtagChange(evt: React.ChangeEvent<HTMLSelectElement>){
+    this.setState({hashtag: evt.target.value})
   }
 
   render() {
@@ -28,16 +41,17 @@ class App extends React.Component<{}> {
                 Twitter #Hashtag Analyzer
               </div>
               <div className="description">
-                This is a simple app to generate statistics regarding #hashtags used on Twitter. Simply input some #hashtag and report will be send to you email. Enjoy!
+                This is a simple app to generate statistics regarding #hashtags used on Twitter. Simply input some #hashtag and report will be send to your email. Enjoy!
               </div>
             </div>
             <div className='app-content'>
               <div className='row'>
                 <div className="report-category-container">
-                  <ReportCategory title="Get general #hashtag statistics from given time period" onClick={this.changeRaportCategory.bind(this)}/>
-                  <ReportCategory title="Get most popular posts for given #hashtag" onClick={this.changeRaportCategory.bind(this)}/>
-                  <ReportCategory title="Get #hashtag popularity prediction" onClick={this.changeRaportCategory.bind(this)}/>
-                </div>
+                {categories.map(cat => 
+                    <ReportCategory id={cat.id} title={cat.title} selectedId={this.state.selectedId}
+                    onClick={this.changeReportCategory.bind(this)}/>
+                  )}                
+                  </div>
               </div>
               <HashtagInput onChange={this.onHashtagChange.bind(this)}/>
             </div>
