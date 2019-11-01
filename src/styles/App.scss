@@ -14,7 +14,7 @@
   width: 100%;
 }
 .height-100 {
-  height: 100%
+  height: 100%;
 }
 
 .app-description {
@@ -41,7 +41,7 @@
 }
 
 .description {
-  font-size: $font-size-medium
+  font-size: $font-size-medium;
 }
 
 .report-category {
@@ -76,18 +76,51 @@
 }
 
 .hashtag-input-container {
-    border: 2px solid #DDD;
-    width: 100%;
-    height: 50px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    font-size: $font-size-medium;
-    margin: $padding-medium;
+  border: 2px solid #ddd;
+  width: calc(100% - 2 * #{$padding-small});
+  height: 60px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-size: $font-size-medium;
+  margin: $padding-small;
 
-    .hashtag-input {
-      border: none;
-      outline: none;
-      font-size: inherit;
-    }
+  .hashtag-input {
+    border: none;
+    outline: none;
+    font-size: inherit;
   }
+}
+
+.filter {
+  padding: $padding-small;
+  font-size: $font-size-medium;
+  flex-grow: 1;
+
+  & input {
+    font-size: $font-size-medium;
+    padding: $padding-tiny;
+  }
+}
+
+.send-button {
+  width: 200px;
+  height: 100%;
+  padding: $padding-small;
+  background-color: $color-secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 5px $color-shadow;
+  }
+}
+
+.stick-to-bottom {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}

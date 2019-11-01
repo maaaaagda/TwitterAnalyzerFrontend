@@ -9,5 +9,5 @@ export interface IReportCategory extends IReportCategoryBase {
 
 export interface IReportCategoryComponent extends IReportCategoryBase {
   onClick: Function;
-  selectedId: number;
+  selectedReportCategoryId: number;
 }

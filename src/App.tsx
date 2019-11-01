@@ -6,39 +6,44 @@ import { IReportCategory } from "./IReportCategory";
 import GeneralStatisticsForm from "./GeneralStatisticsForm";
 
 interface IState {
-  selectedId: number;
+  selectedReportCategoryId: number;
   hashtag: string;
+  email: string;
 }
 
 const categories: IReportCategory[] = [
   {
     id: 1,
     title: "Get general #hashtag statistics",
-    getForm: (props: any) => <GeneralStatisticsForm {...props} />,
+    getForm: (props: any) => <GeneralStatisticsForm {...props} />
   },
   {
     id: 2,
     title: "Get most popular posts for given #hashtag",
-    getForm: () => {},
+    getForm: () => {}
   },
-  { id: 3, title: "Get #hashtag popularity prediction", getForm: () => {} },
+  { id: 3, title: "Get #hashtag popularity prediction", getForm: () => {} }
 ];
 
 class App extends React.Component<{}, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      selectedId: categories[0].id,
+      selectedReportCategoryId: categories[0].id,
       hashtag: "",
+      email: ""
     };
   }
 
   changeReportCategory(id: number) {
-    this.setState({ selectedId: id });
+    this.setState({ selectedReportCategoryId: id });
   }
 
-  onHashtagChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ hashtag: event.target.value });
+  onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ [event.target.name]: event.target.value } as Pick<
+      IState,
+      any
+    >);
   }
 
   render() {
@@ -60,13 +65,34 @@ class App extends React.Component<{}, IState> {
                   <ReportCategory
                     id={cat.id}
                     title={cat.title}
-                    selectedId={this.state.selectedId}
+                    selectedReportCategoryId={
+                      this.state.selectedReportCategoryId
+                    }
                     onClick={this.changeReportCategory.bind(this)}
                   />
                 ))}
               </div>
             </div>
-            <HashtagInput onChange={this.onHashtagChange.bind(this)} />
+            <HashtagInput onChange={this.onInputChange.bind(this)} />
+            {categories
+              .find(cat => cat.id === this.state.selectedReportCategoryId)!
+              .getForm()}
+            <div className="stick-to-bottom  row">
+              <div className="filter">
+                <div>Email</div>
+                <input
+                  name="email"
+                  placeholder="joe@gmail.com"
+                  onChange={this.onInputChange.bind(this)}
+                  value={this.state.email}
+                />
+              </div>
+              <div className="filter">
+                <div>
+                  <div className="send-button">Send</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

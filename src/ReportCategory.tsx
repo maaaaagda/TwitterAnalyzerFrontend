@@ -4,11 +4,11 @@ import { IReportCategoryComponent } from "./IReportCategory";
 const ReportCategory: React.FC<IReportCategoryComponent> = ({
   title,
   onClick,
-  selectedId,
+  selectedReportCategoryId,
   id,
 }) => {
   let className = "report-category";
-  if (selectedId === id) {
+  if (selectedReportCategoryId === id) {
     className += " selected";
   }
 
