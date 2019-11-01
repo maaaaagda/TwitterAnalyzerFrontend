@@ -1,9 +1,13 @@
-export interface IReportCategory {
-    id: number,
-    title: string
+export interface IReportCategoryBase {
+  id: number;
+  title: string;
 }
 
-export interface IReportCategoryComponent extends IReportCategory {
-    onClick: Function,
-    selectedId: number
+export interface IReportCategory extends IReportCategoryBase {
+  getForm: Function;
+}
+
+export interface IReportCategoryComponent extends IReportCategoryBase {
+  onClick: Function;
+  selectedId: number;
 }
