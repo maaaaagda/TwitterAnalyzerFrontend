@@ -1,9 +1,11 @@
 import React from "react";
 import "./styles/App.scss";
-import ReportCategory from "./ReportCategory";
-import HashtagInput from "./HashtagInput";
-import { IReportCategory } from "./IReportCategory";
-import GeneralStatisticsForm from "./GeneralStatisticsForm";
+import ReportCategory from "./Report/ReportCategory";
+import HashtagInput from "./Report/HashtagInput";
+import { IReportCategory } from "./Report/IReportCategory";
+import GeneralStatisticsForm from "./Report/GeneralStatisticsForm";
+import MostPopularPosts from "./Report/MostPopularPosts";
+import HashtagPopularityPrediction from "./Report/HashtagPopularityPrediction";
 
 interface IState {
   selectedReportCategoryId: number;
@@ -20,9 +22,13 @@ const categories: IReportCategory[] = [
   {
     id: 2,
     title: "Get most popular posts for given #hashtag",
-    getForm: () => {}
+    getForm: (props: any) => <MostPopularPosts {...props} />
   },
-  { id: 3, title: "Get #hashtag popularity prediction", getForm: () => {} }
+  {
+    id: 3,
+    title: "Get #hashtag popularity prediction",
+    getForm: (props: any) => <HashtagPopularityPrediction {...props} />
+  }
 ];
 
 class App extends React.Component<{}, IState> {

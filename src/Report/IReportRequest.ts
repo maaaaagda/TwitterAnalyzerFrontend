@@ -11,10 +11,10 @@ export interface ITimePeriod {
 export enum IPredictionTimeOption {
   WEEK = "week",
   MONTH = "month",
-  QUARTER = "quarter",
+  QUARTER = "quarter"
 }
 
-export interface IGeneralStatisticsRequest extends IReportRequest {
+export interface IGeneralStatisticsRequest {
   timePeriod: ITimePeriod;
   country: string;
 }
@@ -23,6 +23,6 @@ export interface IMostPopularPostsRequest extends IGeneralStatisticsRequest {
   nrOfPosts: number;
 }
 
-export interface IHashtagPopularityPrediction extends IReportRequest {
+export interface IHashtagPopularityPrediction {
   predictionTime: IPredictionTimeOption;
 }

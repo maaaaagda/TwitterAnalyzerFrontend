@@ -97,7 +97,8 @@
   font-size: $font-size-medium;
   flex-grow: 1;
 
-  & input {
+  & input,
+  & select {
     font-size: $font-size-medium;
     padding: $padding-tiny;
   }

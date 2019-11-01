@@ -1,16 +1,14 @@
 import React from "react";
-import { ITimePeriod } from "./IReportRequest";
-
-interface IState {
-  country: string;
-  timePeriod: ITimePeriod;
-}
+import { IMostPopularPostsRequest } from "./IReportRequest";
 
 interface IProps {
   onSave: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-class GeneralStatisticsForm extends React.Component<IProps, IState> {
+class MostPopularPosts extends React.Component<
+  IProps,
+  IMostPopularPostsRequest
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -18,7 +16,8 @@ class GeneralStatisticsForm extends React.Component<IProps, IState> {
       timePeriod: {
         startTime: "01/01/2019",
         endTime: "01/10/2019"
-      }
+      },
+      nrOfPosts: 10
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -33,7 +32,7 @@ class GeneralStatisticsForm extends React.Component<IProps, IState> {
       });
     } else {
       this.setState({ [event.target.name]: event.target.value } as Pick<
-        IState,
+        IMostPopularPostsRequest,
         any
       >);
     }
@@ -66,8 +65,16 @@ class GeneralStatisticsForm extends React.Component<IProps, IState> {
             value={this.state.country}
           />
         </div>
+        <div className="filter">
+          <div>Nr of posts</div>
+          <input
+            name="nrOfPosts"
+            onChange={this.onInputChange}
+            value={this.state.nrOfPosts}
+          />
+        </div>
       </div>
     );
   }
 }
-export default GeneralStatisticsForm;
+export default MostPopularPosts;

@@ -5,7 +5,7 @@ const ReportCategory: React.FC<IReportCategoryComponent> = ({
   title,
   onClick,
   selectedReportCategoryId,
-  id,
+  id
 }) => {
   let className = "report-category";
   if (selectedReportCategoryId === id) {
