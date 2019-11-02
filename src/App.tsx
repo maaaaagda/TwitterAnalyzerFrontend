@@ -1,33 +1,46 @@
 import React from "react";
 import "./styles/App.scss";
 import ReportCategory from "./Report/ReportCategory";
-import HashtagInput from "./Report/HashtagInput";
 import { IReportCategory } from "./Report/IReportCategory";
 import GeneralStatisticsForm from "./Report/GeneralStatisticsForm";
 import MostPopularPosts from "./Report/MostPopularPosts";
 import HashtagPopularityPrediction from "./Report/HashtagPopularityPrediction";
+import {
+  IGeneralStatisticsRequest,
+  IMostPopularPostsRequest,
+  IHashtagPopularityPrediction
+} from "./Report/IReportRequest";
+import {
+  getGeneralStatistics,
+  getMostPopularPosts,
+  getHashtagPopularityPrediction
+} from "./api";
 
 interface IState {
   selectedReportCategoryId: number;
   hashtag: string;
   email: string;
+  reportCategorySpecificData: any;
 }
 
 const categories: IReportCategory[] = [
   {
     id: 1,
     title: "Get general #hashtag statistics",
-    getForm: (props: any) => <GeneralStatisticsForm {...props} />
+    getForm: (props: any) => <GeneralStatisticsForm {...props} />,
+    callApi: getGeneralStatistics
   },
   {
     id: 2,
     title: "Get most popular posts for given #hashtag",
-    getForm: (props: any) => <MostPopularPosts {...props} />
+    getForm: (props: any) => <MostPopularPosts {...props} />,
+    callApi: getMostPopularPosts
   },
   {
     id: 3,
     title: "Get #hashtag popularity prediction",
-    getForm: (props: any) => <HashtagPopularityPrediction {...props} />
+    getForm: (props: any) => <HashtagPopularityPrediction {...props} />,
+    callApi: getHashtagPopularityPrediction
   }
 ];
 
@@ -37,7 +50,8 @@ class App extends React.Component<{}, IState> {
     this.state = {
       selectedReportCategoryId: categories[0].id,
       hashtag: "",
-      email: ""
+      email: "",
+      reportCategorySpecificData: {}
     };
   }
 
@@ -45,11 +59,25 @@ class App extends React.Component<{}, IState> {
     this.setState({ selectedReportCategoryId: id });
   }
 
-  onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ [event.target.name]: event.target.value } as Pick<
-      IState,
-      any
-    >);
+  onSave(
+    data:
+      | IGeneralStatisticsRequest
+      | IMostPopularPostsRequest
+      | IHashtagPopularityPrediction
+  ) {
+    if (Object.values(data).every(key => key)) {
+      categories
+        .find(cat => cat.id === this.state.selectedReportCategoryId)!
+        .callApi(data)
+        .then(() => {
+          alert("Data posted! Report will be sent to provided email");
+        })
+        .catch((err: Error) => {
+          alert("Getting statistics failed. Error: " + JSON.stringify(err));
+        });
+    } else {
+      alert("Validation failed. Please provide all data needed");
+    }
   }
 
   render() {
@@ -70,6 +98,7 @@ class App extends React.Component<{}, IState> {
                 {categories.map(cat => (
                   <ReportCategory
                     id={cat.id}
+                    key={cat.id}
                     title={cat.title}
                     selectedReportCategoryId={
                       this.state.selectedReportCategoryId
@@ -79,26 +108,9 @@ class App extends React.Component<{}, IState> {
                 ))}
               </div>
             </div>
-            <HashtagInput onChange={this.onInputChange.bind(this)} />
             {categories
               .find(cat => cat.id === this.state.selectedReportCategoryId)!
-              .getForm()}
-            <div className="stick-to-bottom  row">
-              <div className="filter">
-                <div>Email</div>
-                <input
-                  name="email"
-                  placeholder="joe@gmail.com"
-                  onChange={this.onInputChange.bind(this)}
-                  value={this.state.email}
-                />
-              </div>
-              <div className="filter">
-                <div>
-                  <div className="send-button">Send</div>
-                </div>
-              </div>
-            </div>
+              .getForm({ onSave: this.onSave.bind(this) })}
           </div>
         </div>
       </div>

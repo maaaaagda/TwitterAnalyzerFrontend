@@ -10,6 +10,7 @@ const HashtagInput: React.FC<IProps> = ({ onChange }) => {
       <div className="hashtag-input-container">
         <span># </span>
         <input
+          name="hashtag"
           className="hashtag-input"
           onChange={onChange}
           placeholder="hashtag"

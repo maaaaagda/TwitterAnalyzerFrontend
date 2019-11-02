@@ -5,6 +5,7 @@ export interface IReportCategoryBase {
 
 export interface IReportCategory extends IReportCategoryBase {
   getForm: Function;
+  callApi: Function;
 }
 
 export interface IReportCategoryComponent extends IReportCategoryBase {

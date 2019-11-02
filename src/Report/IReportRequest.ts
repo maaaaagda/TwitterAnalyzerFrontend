@@ -14,7 +14,7 @@ export enum IPredictionTimeOption {
   QUARTER = "quarter"
 }
 
-export interface IGeneralStatisticsRequest {
+export interface IGeneralStatisticsRequest extends IReportRequest {
   timePeriod: ITimePeriod;
   country: string;
 }
@@ -23,6 +23,6 @@ export interface IMostPopularPostsRequest extends IGeneralStatisticsRequest {
   nrOfPosts: number;
 }
 
-export interface IHashtagPopularityPrediction {
+export interface IHashtagPopularityPrediction extends IReportRequest {
   predictionTime: IPredictionTimeOption;
 }
